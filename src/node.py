@@ -1,5 +1,6 @@
-from functions import get_neighbors, swap_cell
-import logging 
+import numpy as np
+import logging
+from functions import swap_cell, get_neighbors
 
 log  = logging.getLogger('Node')
 class Node:
@@ -20,11 +21,18 @@ class Node:
         log.debug('Applying path of node traversal on given node : %s', self)
         temp = initial_state.copy()
         first = self.position
-        for second in self.visited:
+        for i in range(len(self.visited)-1, -1, -1):
+            second = self.visited[i]
+            log.debug('Swap {} with {}'.format(first, second))
             swap_cell(first, second, temp)
             first = second
         log.debug('State after apply : \n%s', temp)
         return temp
 
     def __repr__(self):
-        return "Position : {}\tVisited : {}\tNeighbors : {}".format(self.position, self.visited, self.neighbors)
+        return '{}/{}'.format(self.position, self.visited)
+
+    def __eq__(self, other):
+        if not isinstance(other, Node):
+            return NotImplemented
+        return self.position == other.position and self.visited == other.visited

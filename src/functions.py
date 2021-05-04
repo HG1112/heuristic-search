@@ -8,4 +8,8 @@ def swap_cell(pos1, pos2, state):
     x2 = pos2[0]
     y1 = pos1[1]
     y2 = pos2[1]
-    state[x1][y1] , state[x2][y2] = state[x2][y2], state[x1][y1]
+    if abs(x1+y1-x2-y2) == 1:
+        state[x1][y1] , state[x2][y2] = state[x2][y2], state[x1][y1]
+    else:
+        raise ValueError('Unsupported swap of cells between {} and {}'.format(pos1, pos2))
+
