@@ -26,4 +26,6 @@
 
 ## A-start algorithm with manhattan distance
 
+## tests
 
+	pytest -v

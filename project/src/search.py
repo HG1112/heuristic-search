@@ -1,26 +1,26 @@
 from collections import deque
 import numpy as np
 import logging
-from node import Node
+from project.src.node import Node
 
 log = logging.getLogger('Search')
 class Search:
 
-    def __init__(self, initial_state):
-        self.grid_size = initial_state.shape[0]
+    def __init__(self, goal_state):
+        self.grid_size = goal_state.shape[0]
         initial_position = (self.grid_size-1, self.grid_size-1)
         self.root = Node(initial_position, self.grid_size, [])
-        self.init = initial_state
-        log.debug('Initial state :\n%s', initial_state)
+        self.goal = goal_state
+        log.debug('Goal state :\n%s', goal_state)
 
-    def find(self, goal_state, heuristic):
+    def find(self, initial_state, heuristic):
         queue = deque()
         queue.append(self.root)
         while len(queue) != 0:
             node = queue.popleft()
-            if self.test(node.apply(self.init), goal_state):
+            if self.test(node.apply(initial_state), self.goal):
                 return node
-            for n in sorted(node.next(), key = lambda node : heuristic(node, self.init, goal_state) , reverse = True):
+            for n in sorted(node.next(), key = lambda node : heuristic(node, initial_state, self.goal) , reverse = True):
                 log.debug('Add node : %s', n)
                 queue.append(n)
         return None
