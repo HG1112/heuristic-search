@@ -1,12 +1,17 @@
 from project.src.state import State
+from project.src.puzzle import Puzzle , create_puzzle
 
 def test_2x2():
-    bfs = [ State(2) ]
-    count = 0
+    puz = create_puzzle(2)
+    state = State(puz, None)
+    visited = []
+    bfs = [state]
     while bfs:
-        count+=1
         s = bfs.pop(0)
-        for n in s.next():
-            bfs.append(n)
-    assert count == 23
+        if s.puzzle in visited:
+            continue
+        for st in s.next_possible_states(visited):
+            bfs.append(st)
+        visited.append(s.puzzle)
+    assert len(visited) == 12
 

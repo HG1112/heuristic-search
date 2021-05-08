@@ -1,29 +1,39 @@
-from collections import deque
-import numpy as np
 import logging
-from project.src.node import Node
+from heapq import heappush, heapify, heappop
+from project.src.state import State
+from project.src.puzzle import create_puzzle
+from project.src.heuristic import *
 
 log = logging.getLogger('Search')
 class Search:
 
-    def __init__(self, goal_state):
-        self.grid_size = goal_state.shape[0]
-        initial_position = (self.grid_size-1, self.grid_size-1)
-        self.root = Node(initial_position, self.grid_size, [])
-        self.goal = goal_state
-        log.debug('Goal state :\n%s', goal_state)
+    def __init__(self, n):
+        log.info('Search for complete puzzle of size %s', n*n -1)
+        self.goal = create_puzzle(n)
+        log.info('Goal : %s', self.goal)
 
-    def find(self, initial_state, heuristic):
-        queue = deque()
-        queue.append(self.root)
-        while len(queue) != 0:
-            node = queue.popleft()
-            if self.test(node.apply(initial_state), self.goal):
-                return node
-            for n in sorted(node.next(), key = lambda node : heuristic(node, initial_state, self.goal) , reverse = True):
-                log.debug('Add node : %s', n)
-                queue.append(n)
+    def solve(self, initial_state, heuristic):
+        visited = []
+
+        log.info('Initializing priority queue')
+        queue = [(a_star(initial_state, heuristic), initial_state)]
+        heapify(queue)
+
+        log.info('Loop through the queue')
+        while queue:
+            priority, state = heappop(queue)
+            log.debug('Priority : %s , State : %s', priority, state)
+
+            if state.puzzle in visited:
+                log.debug('Skip : %s', state)
+                continue
+
+            log.debug('Check : %s', state)
+            if state.puzzle == self.goal:
+                return state
+
+            log.debug('adding its children to priority queue')
+            for st in state.next_possible_state(visited):
+                heappush(queue, (a_star(st, heuristic), st))
+
         return None
-
-    def test(self, a, b):
-        return np.array_equal(a, b)
