@@ -15,7 +15,7 @@ class State:
 
 
     def __repr__(self):
-        return 'State(' + ' | '.join(['Parent : {}'.format(self.parent) , 'Puzzle : {}'.format(self.puzzle), 'Cost : {}'.format(self.depth) ]) + ")"
+        return 'State(' + ' | '.join(['Parent : {}'.format(self.parent) , 'Puzzle : {}'.format(self.puzzle), 'Depth : {}'.format(self.depth) ]) + ")"
 
 
     def __lt__(self, other):

@@ -34,7 +34,7 @@ def test_a_star():
     assert a_star(state, misplaced_tile) == 1
     puzzle.board = [0,2,3, 1,5,6, 4,7,8]
     state = State(puzzle, None)
-    state.cost = 4
+    state.depth = 4
     assert a_star(state, no_cost) == 4
     assert a_star(state, manhattan_distance) == 12
     assert a_star(state, misplaced_tile) == 9
