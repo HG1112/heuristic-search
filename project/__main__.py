@@ -6,21 +6,22 @@ from project.src.heuristic import *
 from project.src.puzzle import create_puzzle, Puzzle
 
 log_format='[%(name)s] : %(message)s'
-logging.basicConfig(level=logging.DEBUG , format=log_format)
+logging.basicConfig(level=logging.INFO , format=log_format)
 
 log = logging.getLogger('Main')
 
 if __name__ == '__main__':
     log.debug('Initializing search')
 
-    puz = create_puzzle(3)
-    state = State(puz, None)
-    visited = []
-    bfs = [state]
-    count = 0
+    #new_puz = Puzzle([4,0,8,6,1,3,5,7,2], (0,1), (3,3))
+    new_puz = Puzzle([4,8,0,6,1,3,5,7,2], (0,2), (3,3))
+    state = State(new_puz, None)
     search = Search(3)
-    print(search.solve(state, manhattan_distance))
-#    new_puz = Puzzle([4,0,8,6,1,3,5,7,2], (0,1), (3,3))
+    result = search.solve(state, manhattan_distance)
+    print('Solution: ')
+    while result:
+        print(result.puzzle.blank_pos)
+        result = result.parent
 #    while bfs:
 #        s = bfs.pop(-1)
 #        if s.puzzle == new_puz:

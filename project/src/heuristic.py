@@ -35,7 +35,7 @@ def no_cost(current_board):
 
 
 def a_star(state, heuristic):
-    g = state.cost
+    g = state.depth
     h = heuristic(state.puzzle.board)
     log.debug('A-star : %s + %s', g, h)
     return g+h

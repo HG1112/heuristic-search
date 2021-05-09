@@ -33,7 +33,9 @@ class Search:
                 return state
 
             log.debug('adding its children to priority queue')
-            for st in state.next_possible_state(visited):
-                heappush(queue, (a_star(st, heuristic), st))
+            for st in state.next_possible_states(visited):
+                pr = a_star(state, heuristic)
+                log.debug('Child: Priority : %s, State : %s', pr, st)
+                heappush(queue, (pr, st))
 
         return None
