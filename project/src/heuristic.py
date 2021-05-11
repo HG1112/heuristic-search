@@ -14,8 +14,9 @@ def manhattan_distance(current_board):
             x , y = int((val-1)/n), (val-1)%n
         else:
             x , y = n-1, n-1
-        log.debug('Manhattan distance between %s and %s', (i,j), (x,y))
-        sum += (abs(x-i) + abs(y-j))
+        dist = (abs(x-i) + abs(y-j))
+        log.debug('Manhattan distance between %s and %s : %s', (i,j), (x,y), dist)
+        sum += dist
     return sum
 
 
@@ -23,8 +24,9 @@ def misplaced_tile(current_board):
     count = 0
     N = len(current_board)
     for i in range(N-1):
-        log.debug('Misplaced tile ? - %s / %s', i+1, current_board[i])
-        count += int(i+1 != current_board[i])
+        flag = int(i+1 != current_board[i])
+        log.debug('Misplaced tile ? - %s / %s : %s', i+1, current_board[i], flag)
+        count += flag
     log.debug('Misplaced tile ? - %s / %s', 0, current_board[N-1])
     count += int(0 != current_board[N-1])
     return count

@@ -23,3 +23,11 @@ class State:
 
     def __le__(self, other):
         return self.depth <= other.depth
+
+    def path_from_root(self):
+        path = []
+        parent = self
+        while parent:
+            path.insert(0,parent.puzzle.blank_pos)
+            parent = parent.parent
+        return path
