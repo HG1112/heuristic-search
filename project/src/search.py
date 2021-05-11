@@ -8,21 +8,25 @@ log = logging.getLogger('Search')
 class Search:
 
     def __init__(self, n):
-        log.info('Search for complete puzzle of size %s', n*n -1)
+        log.debug('Search for complete puzzle of size %s', n*n)
         self.goal = create_puzzle(n)
         log.info('Goal : %s', self.goal)
 
     def solve(self, initial_state, heuristic):
         visited = []
 
-        log.info('Initializing priority queue')
+        log.debug('Initializing priority queue')
         queue = [(a_star(initial_state, heuristic), initial_state)]
         heapify(queue)
+        
+        max_queue_length = len(queue)
+        states_expanded = 0
 
-        log.info('Loop through the queue')
+        log.debug('Loop through the queue')
         while queue:
             priority, state = heappop(queue)
-            log.info('Expanding to %s with priority %s', state.puzzle, priority)
+            log.info('Expanding to %s with priority %s and depth %s', state.puzzle, priority, state.depth)
+            states_expanded+=1
 
             if state.puzzle in visited:
                 log.debug('Skip : %s', state)
@@ -30,7 +34,7 @@ class Search:
 
             log.debug('Check : %s', state)
             if state.puzzle == self.goal:
-                return state
+                return max_queue_length, states_expanded, state
 
             log.debug('adding its children to priority queue')
             for st in state.next_possible_states(visited):
@@ -38,4 +42,6 @@ class Search:
                 log.debug('Child: Priority : %s, State : %s', pr, st)
                 heappush(queue, (pr, st))
 
-        return None
+            max_queue_length = max(max_queue_length, len(queue))
+
+        return max_queue_length, states_expanded, None

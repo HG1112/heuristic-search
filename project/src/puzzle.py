@@ -84,7 +84,7 @@ class Puzzle:
         pass
 
 def create_puzzle(n):
-    log.info('Create puzzle of side %s', n)
+    log.debug('Create puzzle of side %s', n)
     board = [ i+1 for i in range(n**2) ]
     board[n**2 - 1] = 0
     return Puzzle(board, (n-1,n-1), (n,n))
