@@ -22,7 +22,7 @@ class Search:
         log.info('Loop through the queue')
         while queue:
             priority, state = heappop(queue)
-            log.debug('Priority : %s , State : %s', priority, state)
+            log.info('Expanding to %s with priority %s', state.puzzle, priority)
 
             if state.puzzle in visited:
                 log.debug('Skip : %s', state)

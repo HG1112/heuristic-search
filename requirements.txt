@@ -1,3 +1,4 @@
 logging
 pytest
 pygame
+termcolor
