@@ -4,7 +4,9 @@ from project.src.move import Moves
 
 log = logging.getLogger('Puzzle')
 class Puzzle:
-
+    '''
+    Abstraction to store a n x n square sliding tile puzzle
+    '''
     def __init__(self, board, blank_pos, shape):
         self.board = board
         self.blank_pos = blank_pos
@@ -23,8 +25,12 @@ class Puzzle:
         return True
 
     def apply_move(self, move):
+        '''
+        Returns a new puzzle - blank position of given puzzle moves in the direction of given move. 
+        '''
         log.debug('Apply move %s on given puzzle', move)
 
+        # copy a given board
         copy = deepcopy(self.board)
         log.debug('Deepcopy of current board')
 
@@ -46,11 +52,16 @@ class Puzzle:
         next = x*l + y
         log.debug('Next Blank of puzzle : %s', (x,y))
 
+        # swap the current with given blank position
         copy[curr], copy[next] = copy[next], copy[curr]
 
         return Puzzle(copy, (x,y), (l,b))
     
     def possible_moves(self, not_allowed):
+        '''
+        Returns a list of tuples with next possible legal moves and the resultant puzzle after applying the move.\n
+        not_allowed has the last legal position.  
+        '''
         log.debug('Possible moves for given puzzle and not_allowed %s', not_allowed)
 
         l , b = self.shape
@@ -81,11 +92,17 @@ class Puzzle:
         return moves
     
     def matrix_repr(self):
+        '''
+        Represnts the board in a 2D array
+        '''
         l,b = self.shape
         return '\n'.join( [' , '.join([ str(self.board[ i*l + j ]) for j in range(0,b)]) for i in range(0,l) ] )
 
 
 def create_puzzle(n):
+    '''
+    Create the goal board for a side n
+    '''
     log.debug('Create puzzle of side %s', n)
     board = [ i+1 for i in range(n**2) ]
     board[n**2 - 1] = 0

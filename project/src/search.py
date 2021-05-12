@@ -6,6 +6,9 @@ from project.src.heuristic import *
 
 log = logging.getLogger('Search')
 class Search:
+    '''
+    Represents a solver for a puzzle of shape n x n
+    '''
 
     def __init__(self, n):
         log.debug('Search for complete puzzle of size %s', n*n)
@@ -13,6 +16,10 @@ class Search:
         log.info('Goal : %s', self.goal)
 
     def solve(self, initial_state, heuristic):
+        '''
+        Solves from initial state to goal state with given heuristic.\n 
+        Returns the max queue length, number of states expanded and final state.
+        '''
         visited = []
 
         log.debug('Initializing priority queue')

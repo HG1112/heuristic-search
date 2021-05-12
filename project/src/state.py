@@ -1,5 +1,8 @@
 class State:
-
+    '''
+    Representation of a node in the search tree. \n
+    It has a puzzle instance, a pointer to it's parent and it's depth in the search tree
+    '''
     def __init__(self, puzzle, parent):
         self.puzzle = puzzle
         self.parent = parent
@@ -8,6 +11,9 @@ class State:
             self.depth += parent.depth
 
     def next_possible_states(self, visited):
+        '''
+        Returns all possible nodes for a given state which haven't been already visited in the search tree.
+        '''
         if self.parent:
             return [ State(puz, self) for move , puz in self.puzzle.possible_moves(self.parent.puzzle.blank_pos) if puz not in visited]
         else:
@@ -25,6 +31,9 @@ class State:
         return self.depth <= other.depth
 
     def path_from_root(self):
+        '''
+        Returns the path of blank to goal position
+        '''
         path = []
         parent = self
         while parent:
