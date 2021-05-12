@@ -80,8 +80,10 @@ class Puzzle:
 
         return moves
     
-    def randomize(self, depth):
-        pass
+    def matrix_repr(self):
+        l,b = self.shape
+        return '\n'.join( [' , '.join([ str(self.board[ i*l + j ]) for j in range(0,b)]) for i in range(0,l) ] )
+
 
 def create_puzzle(n):
     log.debug('Create puzzle of side %s', n)

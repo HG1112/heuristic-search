@@ -24,8 +24,9 @@ class Search:
 
         log.debug('Loop through the queue')
         while queue:
-            priority, state = heappop(queue)
-            log.info('Expanding to %s with priority %s and depth %s', state.puzzle, priority, state.depth)
+            priority, state = heappop(queue)            
+            log.info('Expanding with priority %s and depth %s',  priority, state.depth)
+            log.info('Matrix \n%s ', state.puzzle.matrix_repr() )
             states_expanded+=1
 
             if state.puzzle in visited:
