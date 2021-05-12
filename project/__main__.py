@@ -1,4 +1,5 @@
 import logging
+import time
 from random import random
 from termcolor import colored
 
@@ -57,8 +58,10 @@ def main():
     log.info(colored('Path: %s', 'green'),colored(' -> '.join([ str(coord) for coord in result.path_from_root()]), 'cyan'))
     log.info(colored('Number of states expanded : {}'.format(states_expanded), 'green'))
     log.info(colored('Maximum length of priority queue : {}'.format(max_queue_length), 'green'))
-
+    log.info(colored('Time taken : {}'.format( (time.time() - start_time) ), 'green'))
+    
 if __name__ == '__main__':
     log.info(WELCOME)
+    start_time = time.time()
     main()
 
